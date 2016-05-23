@@ -52,9 +52,9 @@ class OrdersController < ApplicationController
     @order = current_order
     @orderitems = @order.orderitems
     session.delete :order_id
-    order = Order.create
-    order.update(status: "Pending")
-    session[:order_id] = order.id
+    # order = Order.create
+    # order.update(status: "Pending")
+    # session[:order_id] = order.id
   end
 
 
