@@ -61,7 +61,7 @@ class OrdersController < ApplicationController
 
   def shipping
     @order = current_order
-    assemble_pricing_options#needs @order when we remove set pricing in assmeble pricing method.
+    assemble_pricing_options(params[:id])#needs @order when we remove set pricing in assmeble pricing method.
   end
 
   def update_shipping
@@ -94,12 +94,9 @@ class OrdersController < ApplicationController
       :email, :status, :street_address, :credit_card_cvv, :credit_card_number, :credit_card_exp_date])
   end
 
-  def assemble_pricing_options
+  def assemble_pricing_options(id)
     #assembles the total pricing from shipping services for a given order
-    @shipping_options = [
-      {shipping_method: "fedex_ground", shipping_price: "$12"},
-      {shipping_method: "fedex_2_day", shipping_price: "$16"}
-    ]
+    @shipping_options = ShippingRequestWrapper.all_estimates(id) 
   end
 
 end
