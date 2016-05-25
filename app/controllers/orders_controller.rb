@@ -30,11 +30,13 @@ class OrdersController < ApplicationController
     @order = current_order
     @orderitems = @order.orderitems
     continue = remove_items_from_stock(@orderitems)
-    unless continue == false
-      @order.update(order_update_params[:order])
-    end
-    if @order.status == "Completed"
-      redirect_to order_confirmation_path(@order.id)
+    if continue
+      if @order.update(order_update_params[:order])
+        redirect_to order_shipping_path(@order)
+      else
+        flash[:notice] = "Sorry! We couldn't process this request."
+        redirect_to edit_order_path(current_order.id)
+      end
     else
       flash[:notice] = "Sorry! An item you wanted is out of stock. Check to see if you have duplicate items in your cart."
       redirect_to edit_order_path(current_order.id)
@@ -57,6 +59,14 @@ class OrdersController < ApplicationController
     # session[:order_id] = order.id
   end
 
+  def shipping
+    @order = current_order
+    assemble_pricing_options#needs @order when we remove set pricing in assmeble pricing method.
+  end
+
+  def update_shipping
+    @order = @order.update(params[:shipping_method])
+  end
 
   private
 
@@ -82,6 +92,14 @@ class OrdersController < ApplicationController
     params[:order][:credit_card_number] = params[:order][:credit_card_number][-4..-1]
     params.permit(order: [:name_on_credit_card, :user_id, :city, :state, :billing_zip,
       :email, :status, :street_address, :credit_card_cvv, :credit_card_number, :credit_card_exp_date])
+  end
+
+  def assemble_pricing_options
+    #assembles the total pricing from shipping services for a given order
+    @shipping_options = [
+      {shipping_method: "fedex_ground", shipping_price: "$12"},
+      {shipping_method: "fedex_2_day", shipping_price: "$16"}
+    ]
   end
 
 end

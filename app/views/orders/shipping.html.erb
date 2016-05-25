@@ -1,0 +1,12 @@
+<h1>Choose your shipping:</h1>
+
+<h4>To finish up, please provide all of the following information:</h4><br>
+<%= form_for @order, url: order_update_shipping_path(@order), method: :patch, html: { :class => "form-horizontal center" } do |f| %>
+
+  <% @shipping_options.each do |option| %>
+  <%= f.label option[:shipping_method] %>
+  <%= f.radio_button :shipping_method, option  %>
+  <% end %>
+
+<%= f.submit "Submit", class:"btn btn-success btn-lg" %>
+<% end %>
