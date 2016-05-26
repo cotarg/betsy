@@ -12,11 +12,12 @@ Credit Card : **** **** **** **** <%= @order.credit_card_number %><br><br>
 Item: <%= link_to Product.find(item.product_id).name , product_path(Product.find(item.product_id).id) %><br>
 Quantity: <%= item.quantity %><br>
 Subtotal: $<%= number_with_precision item.total_price , precision: 2%><br><br>
-<% @cart_price += item.total_price %>
+Shipping: $<%= number_with_precision eval(JSON.parse(@order.shipping_method)).values , precision: 2 %>
+<% @cart_price += (item.total_price + eval(JSON.parse(@order.shipping_method)).values) %>
 <% end %>
 
 <h3> Total Price of Order: $<%= number_with_precision @cart_price , precision: 2   %></h3>
-<h3> Shipping method chosen: <%= @order.shipping_method %></h3>
+<h3> Shipping method chosen: <%= eval(JSON.parse(@order.shipping_method)).keys %></h3>
 <h3> Order Status: <%= @order.status %></h3>
 <h3> Time Order was placed: <%= @order.updated_at %></h3>
 

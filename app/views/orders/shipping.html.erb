@@ -4,7 +4,7 @@
 <%= form_for @order, url: order_update_shipping_path(@order), method: :patch, html: { :class => "form-horizontal center" } do |f| %>
 
   <% @shipping_options.each do |carrier, estimate| %>
-    <p><%= f.radio_button :shipping_method, carrier  %>
+    <p><%= f.radio_button :shipping_method, {carrier => estimate}  %>
     <%= f.label :shipping_method, "#{carrier}: $#{sprintf "%.2f",(estimate / 100.0)}" %></p>
   <% end %>
 
