@@ -73,7 +73,9 @@ class OrdersController < ApplicationController
   end
 
   def update_shipping
-    @order = @order.update(params[:shipping_method])
+    @order = current_order
+    @order.update(shipping_method: params[:order][:shipping_method])
+    redirect_to order_confirmation_path(@order.id)
   end
 
   private
