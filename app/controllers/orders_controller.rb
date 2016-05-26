@@ -69,7 +69,7 @@ class OrdersController < ApplicationController
 
   def shipping
     @order = current_order
-    @shipping_options = assemble_pricing_options(@order)#needs @order when we remove set pricing in assmeble pricing method.
+    @shipping_options = assemble_pricing_options(@order)["estimates"]#needs @order when we remove set pricing in assmeble pricing method.
   end
 
   def update_shipping
