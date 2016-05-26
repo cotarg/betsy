@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   resources :orders
 
+  # update order information with address, name, cc info, etc before getting to shipping options page
+  patch '/orders/:id/update_before_shipping' => 'orders#update_before_shipping', as: 'before_shipping'
   get '/orders/:id/shipping' => 'orders#shipping', as: 'order_shipping'
   patch '/orders/:id/shipping' => 'orders#update_shipping', as: 'order_update_shipping'
 

@@ -1,3 +1,5 @@
+require 'shipping_request_wrapper'
+
 class OrdersController < ApplicationController
   before_action :require_login, only: [:show_seller_orders]
 
@@ -59,9 +61,15 @@ class OrdersController < ApplicationController
     # session[:order_id] = order.id
   end
 
+  def update_before_shipping
+    @order = current_order
+    @order.update(order_update_params[:order])
+    redirect_to order_shipping_path(@order.id)
+  end
+
   def shipping
     @order = current_order
-    assemble_pricing_options(params[:id])#needs @order when we remove set pricing in assmeble pricing method.
+    @shipping_options = assemble_pricing_options(@order)#needs @order when we remove set pricing in assmeble pricing method.
   end
 
   def update_shipping
@@ -94,9 +102,9 @@ class OrdersController < ApplicationController
       :email, :status, :street_address, :credit_card_cvv, :credit_card_number, :credit_card_exp_date])
   end
 
-  def assemble_pricing_options(id)
+  def assemble_pricing_options(order)
     #assembles the total pricing from shipping services for a given order
-    @shipping_options = ShippingRequestWrapper.all_estimates(id) 
+    ShippingRequestWrapper.all_estimates(order) 
   end
 
 end
