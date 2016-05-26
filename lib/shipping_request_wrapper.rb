@@ -8,9 +8,9 @@ module ShippingRequestWrapper
   def self.all_estimates(order)
     data = HTTParty.post(BASE_URL + "/shipping_requests",
     {
-      :body => [ {"destination_zip" => order.billing_zip, 
+      :body => {"destination_zip" => order.billing_zip, 
         "number_of_items" => order.orderitems.length,
-        "order_id" => order.id } ].to_json,
+        "order_id" => order.id }.to_json,
       :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
       }).parsed_response
     return data
