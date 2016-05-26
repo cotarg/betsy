@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   resources :orders
 
   get '/orders/:id/shipping' => 'orders#shipping', as: 'order_shipping'
-  patch '/orders/:id/shipping' => 'orders#update_shipping', as: 'order_update_shipping'
 
 
   get '/users/:id/orders' => 'orders#show_seller_orders', as: 'show_seller_orders'
