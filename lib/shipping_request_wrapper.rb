@@ -12,7 +12,7 @@ module ShippingRequestWrapper
         "number_of_items" => order.orderitems.length,
         "order_id" => order.id }.to_json,
       :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
-      timeout: 10 }).parsed_response
+      }).parsed_response
     return data
   end
   #
