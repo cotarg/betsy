@@ -19,6 +19,7 @@ Shipping: $<%= json_shipping_value %>
 <h3> Total Price of Order: $<%= number_with_precision (@cart_price + json_shipping_value.to_f) , precision: 2   %></h3>
 <h3> Shipping method chosen: <%= JSON.parse(@order.shipping_method).keys.first %></h3>
 <h3> Order Status: <%= @order.status %></h3>
+<h3> Delivery Date: <%= JSON.parse(@order.shipping_method).values[1] %></h3>
 <h3> Time Order was placed: <%= @order.updated_at %></h3>
 
 <%= link_to "Thanks for Shopping at Petsy!", root_path %>
