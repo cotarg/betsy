@@ -6,7 +6,7 @@ module ShippingRequestWrapper
   # BASE_URL = "http://localhost:3000/"
 
   def self.all_estimates(order)
-    data = HTTParty.post(BASE_URL + "/shipping_requests",
+    data = HTTParty.post(BASE_URL + "shipping_requests",
     {
       :body => {"destination_zip" => order.billing_zip, 
         "number_of_items" => order.orderitems.length,
