@@ -2,8 +2,7 @@ require 'httparty'
 
 module ShippingRequestWrapper
 
-  # BASE_URL = "https://shipping-service-petsy.herokuapp.com/"
-  BASE_URL = "http://localhost:3000/"
+  BASE_URL = "https://shipping-service-petsy.herokuapp.com/"
 
   def self.all_estimates(order)
     data = HTTParty.post(BASE_URL + "/shipping_requests",
